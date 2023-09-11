@@ -16,25 +16,31 @@
   	<div class="panel panel-default">
     <div class="panel-heading">Board</div>
     <div class="panel-body">
-    <form action="boardInsert.do" method="post">
+    <form action="../boardUpdate.do" method="post">
+    <!-- 
+    	boardUpdate.do 요청을 하게 되면
+    	idx와 일치하는 게시글을 입력한 정보로 수정한 다음
+    	게시글 목록페이지로 이동시키시오
+     -->
+    <input type="hidden" name="idx" value="${vo.idx}">
 		<table class="table">
 			<tr>
 				<td>제목</td>
-				<td><input type="text" name="title" class="form-control"></td>
+				<td><input value="${vo.title}" type="text" name="title" class="form-control"></td>
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td><textarea class="form-control" name="content" rows="7" cols=""></textarea></td>
+				<td><textarea class="form-control" name="content" rows="7" cols="">${vo.content}</textarea></td>
 			</tr>
 			<tr>
 				<td>작성자</td>
-				<td><input type="text" name="writer" class="form-control"></td>
+				<td><input value="${vo.writer}"type="text" name="writer" class="form-control"></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<button class="btn btn-success btn-sm" type="submit">등록</button>
+					<button class="btn btn-success btn-sm" type="submit">수정</button>
 					<button class="btn btn-warning btn-sm" type="reset">취소</button>
-					<a href="boardList.do" class="btn btn-info btn-sm"type="submit">목록</a>
+					<a href="../boardList.do" class="btn btn-info btn-sm"type="submit">목록</a>
 				</td>
 			</tr>
 		</table>

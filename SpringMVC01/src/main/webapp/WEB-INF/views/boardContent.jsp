@@ -41,10 +41,10 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<button class="btn btn-success btn-sm" type="submit">등록</button>
+					<a href="../boardUpdateForm.do/${vo.idx}" class="btn btn-success btn-sm" >수정화면</a>
 					<!-- 문제. 게시글을 삭제하고 게시글 목록으로 이동하시오 -->
-					<a href="boardDelete.do?idx=${vo.idx}" class="btn btn-warning btn-sm" >삭제</a>
-					<a href="boardList.do" class="btn btn-info btn-sm" type="submit">목록</a>
+					<a href="../boardDelete.do/${vo.idx}" class="btn btn-warning btn-sm" >삭제</a>
+					<a href="../boardList.do" class="btn btn-info btn-sm" type="submit">목록</a>
 				</td>
 			</tr>
 		</table>
