@@ -25,7 +25,7 @@
                <td>작성일</td>
                <td>조회수</td>
             </tr>
-            <tbody id="view">
+            <tbody id="view" >
             <!-- 비동기 방식으로 가져온 게시글 나오게할 부분 -->
             </tbody>
             
@@ -79,7 +79,7 @@
          // 비동기방식으로 게시글 리스트 가져오기 기능
          // ajax - 요청 url, 어떻게 데이터 받을지, 요청방식 등... -> 객체
          $.ajax({
-            url : "boardList.do",
+            url : "board/all",
             type : "get",
             dataType : "json",
             success : makeView, // 콜백함수
@@ -108,7 +108,7 @@
             listHtml += "<td>내용</td>";
             listHtml += "<td colspan='4'>";
             listHtml += "<textarea id='ta" + obj.idx + "' readonly rows='7' class='form-control'>";
-            listHtml += obj.content;
+            // listHtml += obj.content;
             listHtml += "</textarea>";
             
             
@@ -134,7 +134,7 @@
       }
       
       function goList(){
-         $("#boardList").css("display", "block");
+         $("#boardList").css("display", "table-row");
          $("#wform").css("display", "none");
       }
       
@@ -144,7 +144,7 @@
          var fData = $("#frm").serialize();
          
          $.ajax({
-            url : "boardInsert.do",
+            url : "board/new",
             type : "post",
             data : fData,
             success : loadList,
@@ -157,16 +157,41 @@
       function goContent(idx){
          
          if($("#c" + idx).css("display") == "none"){
+            
+            $.ajax({
+            	
+            	url : "board/" + idx,
+                type : "get",
+                dataType : "json",
+                success : function(data){
+                	$("#ta" + idx).val(data.content);
+                },
+                error : function() { alert("error"); } 
+            	
+            });
+            
             $("#c" + idx).css("display","table-row");
+            
          }else{
+        	 
             $("#c" + idx).css("display","none");
+            
+            $.ajax({
+            	// boardCount.do 요청해서 조회수를 1 올리고
+            	// 게시글을 다시 불러와 적용시키시오
+            	url : "boardCount.do",
+                type : "get",
+                data : {"idx" : idx},
+                success : loadList,
+                error : function() { alert("error"); } 
+            });
          }
       }
       
       function goDelete(idx){
          $.ajax({
-            url : "boardDelete.do",
-            type : "get",
+            url : "board/" + idx,
+            type : "delete",
             data : {"idx" : idx},
             success : loadList,
             error : function() { alert("error"); }      
@@ -191,6 +216,7 @@
       }
       
       function goUpdate(idx){
+    	  
          var title = $("#nt" + idx).val();
          var content = $("#ta" + idx).val();
          var writer = $("#nw" + idx).val();
@@ -202,17 +228,13 @@
          $.ajax({
              url : "boardUpdate.do",
              type : "post",
-             data : {"idx" : idx},
+             data : {"idx" : idx, "title" : title, "content" : content, "writer" : writer},
              success : loadList,
              error : function() { alert("error"); }      
           });
          
       }
       
-      
-      
-      
-   
    </script>
    
 </body>

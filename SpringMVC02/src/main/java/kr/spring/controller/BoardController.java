@@ -1,6 +1,5 @@
 package kr.spring.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,31 +24,5 @@ public class BoardController {
 		System.out.println("홈 기능 수행");
 		return "main";
 	}
-	
-	@RequestMapping("/boardList.do")
-	public @ResponseBody List<Board> boardList() {
-		System.out.println("게시글 전체 보기 기능 수행");
-		List<Board> list = mapper.getLists();
-		System.out.println(list.size());
-		return list;
-	}
-	
-	@RequestMapping("/boardInsert.do")
-	public @ResponseBody void boardInsert(Board board) {
-		System.out.println("게시글 작성 기능 수행");
-		mapper.boardInsert(board);
-	}
-	
-	@RequestMapping("/boardDelete.do")
-	public @ResponseBody void boardDelete(@RequestParam("idx") int idx) {
-		System.out.println("게시글 삭제 기능 수행");
-		mapper.boardDelete(idx);
-	}
-	
-	@RequestMapping("/boardUpdate.do")
-	public @ResponseBody void boardUpdate(Board board) {
-		System.out.println("게시글 삭제 기능 수행");
-		mapper.boardUpdate(board);
-	}
-	
+
 }
