@@ -179,9 +179,8 @@
             $.ajax({
             	// boardCount.do 요청해서 조회수를 1 올리고
             	// 게시글을 다시 불러와 적용시키시오
-            	url : "boardCount.do",
-                type : "get",
-                data : {"idx" : idx},
+            	url : "board/count/" + idx,
+                type : "put",
                 success : loadList,
                 error : function() { alert("error"); } 
             });
@@ -226,9 +225,10 @@
          // 수정된 게시글 다시 불러와서 적용시키시오 (숙제)
          
          $.ajax({
-             url : "boardUpdate.do",
-             type : "post",
-             data : {"idx" : idx, "title" : title, "content" : content, "writer" : writer},
+             url : "board/update",
+             type : "put",
+             contentType : "application/json;charset=utf-8",
+             data : JSON.stringify({"idx" : idx, "title" : title, "content" : content, "writer" : writer}) ,
              success : loadList,
              error : function() { alert("error"); }      
           });

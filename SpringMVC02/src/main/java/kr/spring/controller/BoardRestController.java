@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -63,14 +65,14 @@ public class BoardRestController {
 		mapper.boardDelete(idx);
 	}
 	
-	@RequestMapping("/boardUpdate.do")
-	public void boardUpdate(Board board) {
+	@PutMapping("/update")
+	public void boardUpdate(@RequestBody Board board) {
 		System.out.println("게시글 삭제 기능 수행");
 		mapper.boardUpdate(board);
 	}
 	
-	@RequestMapping("/boardCount.do")
-	public void boardCount(@RequestParam("idx") int idx) {
+	@PutMapping("/count/{idx}")
+	public void boardCount(@PathVariable("idx") int idx) {
 		System.out.println("게시글 삭제 기능 수행");
 		mapper.boardCount(idx);
 	}
