@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +16,8 @@
 </head>
 <body>
 	<div class="container">
-  	<h2>Spring MVC01</h2>
+	<jsp:include page="../common/header.jsp"></jsp:include>
+  	<h2>Spring MVC03</h2>
   	<div class="panel panel-default">
     <div class="panel-heading">Board</div>
     <div class="panel-body">Panel Content</div>
