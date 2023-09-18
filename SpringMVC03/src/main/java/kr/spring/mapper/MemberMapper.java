@@ -1,6 +1,7 @@
 package kr.spring.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Insert;
 
 import kr.spring.entity.Member;
 
@@ -8,6 +9,10 @@ import kr.spring.entity.Member;
 public interface MemberMapper {
 
 	public Member registerCheck(String memID);
+
+	public int join(Member m);
+
+	public Member login(Member m);
 	
 	
 	
