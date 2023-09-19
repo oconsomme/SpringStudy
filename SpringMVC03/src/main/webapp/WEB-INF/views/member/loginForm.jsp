@@ -80,29 +80,7 @@
     </div>
   </div>
   
-  <!-- 회원가입 실패시 띄워줄 모달 -->
-  <div class="modal fade" id="myMessage" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div id="messageType" class="modal-content">
-        <div class="modal-header panel-heading">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">${msgType}</h4>
-        </div>
-        <div class="modal-body">
-        <!-- 아래의 p태그 안에 상황에 따라 달라지는 메시지 작성 -->
-          <p id="">${msg}</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  
-  <!-- 회원가입 실패시 띄워줄 모달 -->
+  <!-- 로그인 실패시 띄워줄 모달 -->
   <div class="modal fade" id="myMessage" role="dialog">
     <div class="modal-dialog">
     

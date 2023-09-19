@@ -67,13 +67,13 @@ public class BoardRestController {
 	
 	@PutMapping("/update")
 	public void boardUpdate(@RequestBody Board board) {
-		System.out.println("게시글 삭제 기능 수행");
+		System.out.println("게시글 수정 기능 수행");
 		mapper.boardUpdate(board);
 	}
 	
 	@PutMapping("/count/{idx}")
 	public void boardCount(@PathVariable("idx") int idx) {
-		System.out.println("게시글 삭제 기능 수행");
+		System.out.println("게시글 조회수 기능 수행");
 		mapper.boardCount(idx);
 	}
 	
