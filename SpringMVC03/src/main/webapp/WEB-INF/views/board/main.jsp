@@ -30,17 +30,21 @@
             <!-- 비동기 방식으로 가져온 게시글 나오게할 부분 -->
             </tbody>
             
+            <c:if test="${not empty mvo}">
             <tr>
                <td colspan="5">
                   <button onclick="goForm()" class="btn btn-primary btn-sm">글쓰기</button>               
                </td>
             </tr>
+            </c:if>
+         
          </table>         
       </div>
       
       <!-- 글쓰기 폼 -->
       <div class="panel-body" id="wform" style="display : none;">
          <form id="frm">
+         <input type="hidden" name="memID" value="${mvo.memID}">
          <table class="table">
             <tr>
                <td>제목</td>
@@ -52,7 +56,7 @@
             </tr>
             <tr>
                <td>작성자</td>
-               <td><input type="text" name="writer" class="form-control"></td>
+               <td><input readonly="readonly" type="text" name="writer" class="form-control" value="${mvo.memName}"></td>
             </tr>
             <tr>
                <td colspan="2" align="center">
@@ -114,10 +118,20 @@
             
             
             // 수정 삭제 화면
-            listHtml += "<br>";
-            listHtml += "<span id='ub"+ obj.idx +"'>";
-            listHtml += "<button onclick='goUpdateForm(" + obj.idx + ")' class='btn btn-sm btn-success'>수정화면</button></span> &nbsp;"
-            listHtml += "<button onclick='goDelete(" + obj.idx + ")' class='btn btn-sm btn-warning'>삭제</button> &nbsp;"
+            // 조건문 안에서 EL식을 쓰고 싶다면 문자열로 감싸줘야한다
+            if("${mvo.memID}" == obj.memID){
+	            listHtml += "<br>";
+	            listHtml += "<span id='ub"+ obj.idx +"'>";
+	            listHtml += "<button onclick='goUpdateForm(" + obj.idx + ")' class='btn btn-sm btn-success'>수정화면</button></span> &nbsp;"
+	            listHtml += "<button onclick='goDelete(" + obj.idx + ")' class='btn btn-sm btn-warning'>삭제</button> &nbsp;"
+            } else{
+            	listHtml += "<br>";
+	            listHtml += "<span id='ub"+ obj.idx +"'>";
+	            listHtml += "<button disabled onclick='goUpdateForm(" + obj.idx + ")' class='btn btn-sm btn-success'>수정화면</button></span> &nbsp;"
+	            listHtml += "<button disabled onclick='goDelete(" + obj.idx + ")' class='btn btn-sm btn-warning'>삭제</button> &nbsp;"
+            }
+            
+            
             listHtml += "</td>";
             listHtml += "</tr>";
          });   

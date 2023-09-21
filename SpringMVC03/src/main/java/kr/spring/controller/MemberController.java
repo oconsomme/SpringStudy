@@ -153,7 +153,10 @@ public class MemberController {
 			return "redirect:/updateForm.do";
 					
 		} else {
-			m.setMemProfile("");
+			// Member member = mapper.getMember(m.getMemID());
+			Member mvo = (Member)session.getAttribute("mvo");
+			m.setMemProfile(mvo.getMemProfile());
+			// m.setMemProfile(m.getMemProfile());
 			int cnt = mapper.update(m);
 			if(cnt == 1) {
 				System.out.println("회원 정보 수정 성공!");

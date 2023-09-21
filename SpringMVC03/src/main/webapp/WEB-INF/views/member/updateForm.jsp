@@ -26,6 +26,7 @@
          <input type="hidden" name="memPassword" id="memPassword" value="">
          <!-- 아이디 값 보내기 -->
          <input type="hidden" name="memID" id="memID" value="${mvo.memID}">
+         <%-- <input type="hidden" name="memProfile" id="memProfile" value="${mvo.memProfile}"> --%>
          <table style="text-align:center; border: 1px solid #dddddd" class="table table-bordered"
          <!-- ID 입력, 중복확인창 -->
             <tr>
