@@ -85,10 +85,38 @@
          <!-- 이메일 -->
             <tr>
                <td style="width:110px; vertical-align:middle;">이메일</td>
-               <td colspan="2"><input type="email" name="memEmail" id="memEmail" class="form-control" maxlength="50" placeholder="이메일 입력하세요." value="${mvo.memEmail}"></td>
+               <td colspan="2">
+               		<input value="ROLE_USER" name="authList[0].auth" type="checkbox"
+               			<c:forEach items="${mvo.authList}" var="auth">
+               				<c:if test="${auth.auth eq 'ROLE_USER'}">
+               					checked
+               				</c:if>
+               			</c:forEach>
+               		/> ROLE_USER
+               		<input value="ROLE_MANAGER" name="authList[0].auth" type="checkbox" 
+               			<c:forEach items="${mvo.authList}" var="auth">
+               				<c:if test="${auth.auth eq 'ROLE_MANAGER'}">
+               					checked
+               				</c:if>
+               			</c:forEach>
+               		/> ROLE_MANAGER
+               		<input value="ROLE_ADMIN" name="authList[0].auth" type="checkbox" 
+               			<c:forEach items="${mvo.authList}" var="auth">
+               				<c:if test="${auth.auth eq 'ROLE_ADMIN'}">
+               					checked
+               				</c:if>
+               			</c:forEach>
+               		/> ROLE_ADMIN               
+               </td>
             </tr>
             
-         <!--  -->
+         <!-- 가지고 있는 권한 체크 및 권한 수정 부분 -->
+         	<tr>
+               <td style="width:110px; vertical-align:middle;">사용자 권한</td>
+               <td colspan="2"><input type="email" name="memEmail" id="memEmail" class="form-control" maxlength="50" placeholder="이메일 입력하세요." value="${mvo.memEmail}"></td>
+            </tr>
+         
+         
             <tr>
                <td colspan="3">
                	  <span id="passMessage" style="color:red;"></span>

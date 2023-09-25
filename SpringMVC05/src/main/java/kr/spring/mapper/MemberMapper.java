@@ -3,6 +3,7 @@ package kr.spring.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Insert;
 
+import kr.spring.entity.Auth;
 import kr.spring.entity.Member;
 
 @Mapper // MyBatis가 interface를 찾기 위해 달아주는 부분
@@ -19,6 +20,10 @@ public interface MemberMapper {
 	public int profileUpdate(Member mvo);
 
 	public Member getMember(String memID);
+
+	public void authInsert(Auth saveVO);
+
+	public void authDelete(String memID);
 	
 	
 	

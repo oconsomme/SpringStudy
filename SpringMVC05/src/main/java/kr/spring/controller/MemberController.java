@@ -2,6 +2,7 @@ package kr.spring.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import kr.spring.entity.Auth;
 import kr.spring.entity.Member;
 import kr.spring.mapper.MemberMapper;
 
@@ -78,13 +80,31 @@ public class MemberController {
 			m.setMemPassword(encyPw);
 			
 			int cnt = mapper.join(m);
+			
+			// 추가 : 권한테이블에 회원의 권한을 저장하기
+			List<Auth> list = m.getAuthList();
+			for(Auth auth : list) {
+				if (auth.getAuth() != null) {
+					// 권한 값이 있을 때만 권한 테이블에 값 넣기
+					Auth saveVO = new Auth();
+					saveVO.setMemID(m.getMemID()); // 회원 아이디 넣기
+					saveVO.setAuth(auth.getAuth()); // 권한 넣기
+					// 권한 저장
+					mapper.authInsert(saveVO);
+				}
+			}
+			
 			// 회원가입 후 index.jsp로 이동시키시오
 			if(cnt == 1) {
 				System.out.println("회원가입 성공!");
 				rttr.addFlashAttribute("msgType", "성공메세지");
 				rttr.addFlashAttribute("msg", "회원가입에 성공했습니다.");
 				// 회원가입 성공 시 로그인 처리까지 시키기
-				session.setAttribute("mvo", m);
+				// 회원가입 성공 시 회원 정보 + 권한정보까지 가져오기
+				Member mvo = mapper.getMember(m.getMemID());
+				
+				
+				session.setAttribute("mvo", mvo);
 				
 				return "redirect:/";
 				
@@ -121,11 +141,13 @@ public class MemberController {
 		
 		Member mvo = mapper.login(m);
 		
-		if (mvo != null) {
+		if (mvo != null && pwEncoder.matches(m.getMemPassword(), mvo.getMemPassword())) {
+			// 추가 비밀번호 일치여부 체크
 			rttr.addFlashAttribute("msgType", "성공메세지");
 			rttr.addFlashAttribute("msg", "로그인에 성공했습니다.");
 			session.setAttribute("mvo", mvo);
 			return "redirect:/";
+			
 		} else {
 			rttr.addFlashAttribute("msgType", "실패메세지");
 			rttr.addFlashAttribute("msg", "로그인에 실패했습니다.");
@@ -154,7 +176,8 @@ public class MemberController {
 		// 유효성 검사
 		if(m.getMemPassword()==null || m.getMemPassword().equals("") || 
 				m.getMemName()==null || m.getMemName().equals("") ||
-				m.getMemAge()==0 || m.getMemEmail()==null || m.getMemEmail().equals("")				
+				m.getMemAge()==0 || m.getMemEmail()==null || m.getMemEmail().equals("")	||
+				m.getAuthList().size() == 0
 				) {
 			
 			rttr.addFlashAttribute("msgType", "실패메세지");
@@ -166,7 +189,27 @@ public class MemberController {
 			// Member member = mapper.getMember(m.getMemID());
 			Member mvo = (Member)session.getAttribute("mvo");
 			m.setMemProfile(mvo.getMemProfile());
-			// m.setMemProfile(m.getMemProfile());
+			
+			// 비밀번호 암호화
+			String encyPw = pwEncoder.encode(m.getMemPassword());
+			m.setMemPassword(encyPw);
+			
+			// 권한 삭제
+			mapper.authDelete(m.getMemID());
+			
+			// 추가 : 권한테이블에 회원의 권한을 저장하기
+			List<Auth> list = m.getAuthList();
+			for(Auth auth : list) {
+				if (auth.getAuth() != null) {
+					// 권한 값이 있을 때만 권한 테이블에 값 넣기
+					Auth saveVO = new Auth();
+					saveVO.setMemID(m.getMemID()); // 회원 아이디 넣기
+					saveVO.setAuth(auth.getAuth()); // 권한 넣기
+					// 권한 저장
+					mapper.authInsert(saveVO);
+				}
+			}
+			
 			int cnt = mapper.update(m);
 			if(cnt == 1) {
 				System.out.println("회원 정보 수정 성공!");
