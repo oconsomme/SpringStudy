@@ -89,7 +89,6 @@
 	         		<input type="checkbox" name="authList[1].auth" value="ROLE_MANAGER"> ROLE_MANAGER
 	         		<input type="checkbox" name="authList[2].auth" value="ROLE_ADMIN"> ROLE_ADMIN
 	         	
-	         	
 	         	</td>
 	         </tr>
          
