@@ -11,9 +11,9 @@
 
 <!-- Spring Security에서 제공하는 계정정보 (SecurityContext 안에 계정정보 가져오기) -->
 <!-- 로그인한 계정정보 -->
-<c:set var="mvo" value="${SPRING_SECURITY_CONTEXT.authentication.principal}" />
+<c:set var="mvo" value="${SPRING_SECURITY_CONTEXT.authentication.principal}" /> <!-- Context 안에 들어간 MemberUser를 가져오는 것을 의미 -->
 <!-- 권한정보 -->
-<c:set var="auth" value="${SPRING_SECURITY_CONTEXT.authentication.authorities}" />
+<c:set var="auth" value="${SPRING_SECURITY_CONTEXT.authentication.authorities}" /> <!--  -->
 
 
 <!DOCTYPE html>
@@ -95,7 +95,7 @@
       
 		    <li><a href="${contextPath}/updateForm.do"><span class="glyphicon glyphicon-pencil">회원정보수정</span></a></li>
 		    <li><a href="${contextPath}/imageForm.do"><span class="glyphicon glyphicon-upload">프로필사진등록</span></a></li>
-		    <li><a href="${contextPath}/logout.do"><span class="glyphicon glyphicon-log-out">로그아웃</span></a></li>
+		    <li><a href="javascript:logout()"><span class="glyphicon glyphicon-log-out">로그아웃</span></a></li>
       </ul>
       </security:authorize>
       
@@ -103,5 +103,30 @@
     </div>
   </div>
 </nav>
+
+<script type="text/javascript">
+	// CSRF 토큰 값 가져오기
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
+	function logout(){
+		$.ajax({
+			url : "${contextPath}/logout",
+			type : "post",
+			beforeSend : function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
+			success : function(){
+				location.href = "${contextPath}/"
+			},
+			error : function(){
+				alert("error");
+			}
+		});
+	}
+
+
+</script>
+
 </body>
 </html>
