@@ -23,6 +23,38 @@ public class BoardController {
 	// BoardService -> interface
 	// BoardServiceImpl -> BoardService로 업캐스팅 된다
 	
+	@PostMapping("/reply")
+	public String reply(Board vo) { // 부모글 번호, 작성 ID, 제목, 답글, 작성자 이름
+		service.reply(vo);
+		return "redirect:/board/list";
+	}
+	
+	@GetMapping("/reply")
+	public String reply(@RequestParam("idx") int idx, Model model) {
+		Board vo = service.get(idx);
+		model.addAttribute("vo", vo);
+		return "board/reply";
+	}
+	
+	@GetMapping("/remove")
+	public String remove(@RequestParam("idx") int idx) {
+		service.remove(idx);
+		return "redirect:/board/list";
+	}
+	
+	@PostMapping("/modify")
+	public String modify(Board vo) {
+		service.modify(vo);
+		return "redirect:/board/list";
+	}
+	
+	@GetMapping("/modify")
+	public String modify(@RequestParam("idx") int idx, Model model) {
+		Board vo = service.get(idx);
+		model.addAttribute("vo", vo);
+		return "board/modify";
+	}
+	
 	@PostMapping("register")
 	public String register(Board vo, RedirectAttributes rttr) {
 		// System.out.println(vo.toString());

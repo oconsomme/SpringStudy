@@ -52,29 +52,30 @@ public class DataSourceTest {
       this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
       
    }
+
    
-   @Test
-   public void testInsert() {
-	   Board vo = new Board();
-	   vo.setMemID("aischool");
-	   vo.setTitle("다음주 화요일부터 코딩페스티벌 시작");
-	   vo.setContent("1등 상금 15만원 지급");
-	   vo.setWriter("교육운영부");
-	   
-	   mapper.insertSelectKey(vo);
-   }
+//   @Test
+//   public void testInsert() {
+//	   Board vo = new Board();
+//	   vo.setMemID("aischool");
+//	   vo.setTitle("다음주 화요일부터 코딩페스티벌 시작");
+//	   vo.setContent("1등 상금 15만원 지급");
+//	   vo.setWriter("교육운영부");
+//	   
+//	   mapper.insertSelectKey(vo);
+//   }
    
 //   * Controller Test
-//   @Test
-//   public void testController() throws Exception{
-//      
-//      log.info(
-//               mockMvc.perform(MockMvcRequestBuilders.get("/board/list"))//perform->요청
-//               .andReturn() // return값을 받아오겠다.
-//               .getModelAndView() // controller의 model값과 view경로를 호출
-//            );
-//      
-//   }
+   @Test
+   public void testController() throws Exception{
+      
+      log.info(
+               mockMvc.perform(MockMvcRequestBuilders.get("/board/modify?idx=3"))//perform->요청
+               .andReturn() // return값을 받아오겠다.
+               .getModelAndView() // controller의 model값과 view경로를 호출
+            );
+      
+   }
    
 //   @Test
 //   public void testGetList() {
