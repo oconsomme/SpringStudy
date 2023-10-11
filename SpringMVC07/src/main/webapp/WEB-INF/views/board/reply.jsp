@@ -44,18 +44,39 @@
     		
     		<button type="submit" class="btn btn-default btn-sm">등록</button>
     		<button type="reset" class="btn btn-default btn-sm">취소</button>
-    		<button onclick="location.href='${cpath}/board/list'"type="button" class="btn btn-default btn-sm">목록</button>
+    		<button type="button" class="btn btn-default btn-sm" data-btn="list">목록</button>
     		
     	</form>
     </div>
     <div class="panel-footer">스프링 게시판</div>
     </div>
 </div>
-
+	
+	<form id = "frm" method="get" action="">
+    		<input id="idx" type="hidden" name="idx" value="${vo.idx}">
+    	
+    </form>
 
 	
 	<script type="text/javascript">
-
+		// 링크처리
+		$(document).ready(function(){
+			
+			$("button").on("click", function(e){
+				var formData = $("#frm");
+				var btn = $(this).data("btn");
+				// alert(btn);
+				
+				if (btn == "list"){
+					formData.attr("action", "${cpath}/board/list");
+					formData.find("#idx").remove();
+				}
+				
+				formData.submit();
+				
+			});
+		});
+	
 	</script>
 
 </body>
