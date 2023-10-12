@@ -9,6 +9,12 @@ public class Criteria { // Criteria : 기준
 	
 	private int perPageNum; // 한 페이지에 보여줄 게시글의 개수
 	
+	// Criteria 기본 셋팅 생성자를 통해서 하기
+	public Criteria() {
+		this.page = 1;
+		this.perPageNum = 5;
+	}
+	
 	// 현재 페이지에 있는 게시글의 시작 번호를 구하는 메소드
 	// 1 page -> 0 ~ 9 / 2 page -> 10 ~ 19
 	// 예외 : mysql에서는 시작값을 0으로 인식

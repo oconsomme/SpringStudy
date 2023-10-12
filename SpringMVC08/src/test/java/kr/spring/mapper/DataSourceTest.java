@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import kr.spring.entity.Board;
+import kr.spring.entity.Criteria;
 import lombok.extern.log4j.Log4j;
 
 
@@ -65,27 +66,31 @@ public class DataSourceTest {
 //	   mapper.insertSelectKey(vo);
 //   }
    
-//   * Controller Test
-   @Test
-   public void testController() throws Exception{
-      
-      log.info(
-               mockMvc.perform(MockMvcRequestBuilders.get("/board/modify?idx=3"))//perform->요청
-               .andReturn() // return값을 받아오겠다.
-               .getModelAndView() // controller의 model값과 view경로를 호출
-            );
-      
-   }
    
+//   * Controller Test
 //   @Test
-//   public void testGetList() {
+//   public void testController() throws Exception{
 //      
-//         List<Board> list = Service.getList();
-//         for (Board vo : list) {
-//            System.out.println(vo.toString());
-//         }
+//      log.info(
+//               mockMvc.perform(MockMvcRequestBuilders.get("/board/modify?idx=3"))//perform->요청
+//               .andReturn() // return값을 받아오겠다.
+//               .getModelAndView() // controller의 model값과 view경로를 호출
+//            );
 //      
 //   }
+   
+   @Test
+   public void testGetList() {
+      
+	   	 Criteria cri = new Criteria();
+	   	 cri.setPage(2);
+	   	 cri.setPerPageNum(0);
+         List<Board> list = Service.getList(cri);
+         for (Board vo : list) {
+            System.out.println(vo.toString());
+         }
+      
+   }
    
 //   테스트는 1개씩만 가능함으로 이전 테스트는 주석처리
 //   @Test

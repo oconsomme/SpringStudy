@@ -76,7 +76,7 @@
 	    				</c:if>
 	    			    	
 	    			    <c:if test="${vo.boardAvailable > 0}">
-		    				<a href="${cpath}/board/get?idx=${vo.idx}">
+		    				<a class="move" href="${vo.idx}">
 		    				<c:if test="${vo.boardLevel > 0}">
 		    					<c:forEach begin="0" end="${vo.boardLevel}" step="1">
 		    						<span style="padding-left : 15px"></span>
@@ -105,6 +105,42 @@
 	    		</tr>
     		</c:if>
     	</table>
+    	
+    	<div style="text-align : center;">
+		  <ul class="pagination">
+		  
+		    <!-- 이전 버튼 처리 -->
+		    <c:if test="${pageMaker.prev}">
+		    	<li class="paginate_button previous">
+		    		<a href="${pageMaker.startPage - 1}">◀</a>
+		    	</li>
+		    </c:if>
+		    
+		    <!-- 페이지 번호 처리 -->
+		    <c:forEach var="pageNum" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+		    	<c:if test="${pageMaker.cri.page == pageNum}">
+					<li class="paginate_button active"><a href="${pageNum}">${pageNum}</a></li>   		
+		    	</c:if>
+		    	
+		    	<c:if test="${pageMaker.cri.page != pageNum}">
+					<li class="paginate_button"><a href="${pageNum}">${pageNum}</a></li>   		
+		    	</c:if>
+		    </c:forEach>
+		    
+		    <!-- 다음 버튼 처리 -->
+		     <c:if test="${pageMaker.next}">
+		    	<li class="paginate_button previous">
+		    		<a href="${pageMaker.endPage + 1}">▶</a>
+		    	</li>
+		    </c:if>
+		  </ul>
+		  
+		  <form action="${cpath}/board/list" id="pageFrm">
+		      <input type="hidden" id="page" name="page" value="${pageMaker.cri.page}">
+		      <input type="hidden" id="perPageNum" name="perPageNum" value="${pageMaker.cri.perPageNum}">
+		  </form>
+		  
+		</div>
     
     </div>
     <div class="panel-footer">스프링 게시판</div>
@@ -133,29 +169,55 @@
   </div>
 	
 	<script type="text/javascript">
-		$(document).ready(function(){
-			
-			var result = "${result}";
-			checkModal(result);
-			
-			$("#regBtn").click(function(){
-				location.href="${cpath}/board/register";	
-				
-			});
-			
-		});
-		
-		function checkModal(result){
-			if(result == ''){
-				return;	
-			} 
-			if(parseInt(result) > 0){
-				$(".modal-body").text("게시글" + result + "번이 등록되었습니다.");
-				$("#myMessage").modal("show");
-			}
-		}
 
-	</script>
+      $(document).ready(function(){
+         
+         //페이지 번호 클릭 시 이동하기
+         var pageFrm = $("#pageFrm");
+         //li 태그 안의 a 태그값을 가져와서 from태그에 적용시켜 페이지를 이동함
+         //클래스임으로 .을 적어주고 부모가 페이지네이트버튼인 a 태그를 클릭했을 때 함수실행
+         $(".paginate_button a").on("click",function(e){
+            //e->현재 클릭한 a태그 요소 자체를 말함.
+            
+            e.preventDefault(); //기본 a태그의 href속성 작동 막기
+            var page = $(this).attr("href"); // 클릭한 a태그의 href값 가져오기
+            pageFrm.find("#page").val(page);
+            pageFrm.submit();
+            
+         });
+         
+         //상세보기 클릭 시 이동
+         $(".move").on("click",function(e){
+            e.preventDefault();
+            var idx = $(this).attr("href");//클릭한 해당 a태그(여기서는 move)의 속성(attr)중 href를 가져올것임
+            var tag = "<input type='hidden' name='idx' value='"+idx+"'>";
+            pageFrm.append(tag);
+            pageFrm.attr("action", "${cpath}/board/get");
+            pageFrm.submit();
+         });
+         
+         
+         var result = "${result}";
+         checkModal(result);
+         
+         $("#regBtn").click(function(){
+            location.href="${cpath}/board/register";                  
+         });
+         
+      });
+   
+      function checkModal(result){
+         if (result == ''){
+            return;
+         }
+         
+         if (parseInt(result) > 0){
+            $(".modal-body").text("게시글" + result + "번이 등록되었습니다.")
+            $("#myMessage").modal("show");
+         }
+      }
+      
+   </script>
 
 </body>
 </html>
