@@ -43,14 +43,14 @@ public class BoardController {
       return "board/register";
    }
    
-   @GetMapping("/list")
+   @RequestMapping("/list")
    public String boardList(Model model, Criteria cri) {
       //(페이징)페이지 정보를 알고있는 criteria 객체를 service에게 전달
       List<Board> list = service.getList(cri);
       //페이징 처리에 필여한 pagemaker객체도 생성
       PageMaker pageMaker = new PageMaker();
       pageMaker.setCri(cri); //page페이커가 페이징 기법을 하기위한 cri객체 전달.
-      pageMaker.setTotalCount(service.totalCount()); // 페이징 기법을 하려면 전체 글의 개수 알려
+      pageMaker.setTotalCount(service.totalCount(cri)); // 페이징 기법을 하려면 전체 글의 개수 알려
       model.addAttribute("list",list);
       model.addAttribute("pageMaker", pageMaker);
       return "board/list";
