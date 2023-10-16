@@ -48,6 +48,10 @@
     		<button data-btn="reply" type="button" class="btn btn-default btn-sm">답변</button>
     		<button data-btn="reset" type="button" class="btn btn-default btn-sm">취소</button>
     		<button data-btn="list" type="button" class="btn btn-default btn-sm">목록</button>
+    		
+    		<!-- type과 keyword를 넘기기위한 부분 추가 -->
+			<input type="hidden" name="type" value="${cri.type}"> <!-- list.jsp를 제외한 모든 jsp에는 pageMaker 사용 X -->
+			<input type="hidden" name="keyword" value="${cri.keyword}">   
 
     	
     </form>

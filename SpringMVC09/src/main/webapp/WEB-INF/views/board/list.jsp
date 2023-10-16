@@ -111,14 +111,14 @@
     		<form class="form-inline" action="${cpath}/board/list" method="post">
     			<div class="form-group">
     				<select name="type" class="form-control">
-    					<option value="writer">이름</option>
-    					<option value="title">제목</option>    
-    					<option value="content">내용</option>        				
+    					<option value="writer" ${pageMaker.cri.type=='writer' ? 'selected' : ''}>이름</option>
+    					<option value="title" ${pageMaker.cri.type=='title' ? 'selected' : ''}>제목</option>    
+    					<option value="content" ${pageMaker.cri.type=='content' ? 'selected' : ''}>내용</option>        				
     				</select>
     			</div>
     			
     			<div class="form-group">
-    				<input type="text" class="form-control" name="keyword">   			
+    				<input type="text" value="${pageMaker.cri.keyword}" class="form-control" name="keyword"> <!-- 검색칸에 검색한 키워드 저장 -->  			
     			</div>
     			<button type="submit" class="btn btn-success">검색</button>
     		</form>
@@ -157,6 +157,10 @@
 		  <form action="${cpath}/board/list" id="pageFrm">
 		      <input type="hidden" id="page" name="page" value="${pageMaker.cri.page}">
 		      <input type="hidden" id="perPageNum" name="perPageNum" value="${pageMaker.cri.perPageNum}">
+		      <!-- type과 keyword를 넘기기위한 부분 추가 -->
+		      <input type="hidden" name="type" value="${pageMaker.cri.type}">
+		      <input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+		      
 		  </form>
 		  
 		</div>
