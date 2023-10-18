@@ -31,6 +31,21 @@ public class BoardServiceImpl implements BoardService {
 		Optional<Board> vo = boardRepository.findById(idx);
 		return vo.get();
 	}
+
+	@Override
+	public void delete(Long idx) {
+		boardRepository.deleteById(idx);		
+	}
+
+	@Override
+	public void update(Board vo) {
+		// JPA -> save 메소드는
+		// 새로운 PK값 또는 없는 값이 들어온다면 insert 기능을
+		// 기존에 존재하는 PK값이 들어온다면 update 기능을
+		boardRepository.save(vo);
+		
+		
+	}
 	
 	
 	
